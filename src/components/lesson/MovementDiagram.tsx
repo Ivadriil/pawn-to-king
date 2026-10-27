@@ -82,7 +82,10 @@ export function MovementDiagram({ movement, onPractice }: { movement: LessonMove
     setSelectedSquare(null);
   };
 
-  const pieces = readPieces(game);
+  const board = readPieces(game);
+  const pieces = Object.fromEntries(Object.entries(board).filter(([square]) =>
+    square === pieceSquare || (isPawn && square === captureSquare),
+  )) as Partial<Record<string, ChessPiece>>;
   return (
     <section className="movement-diagram" aria-label={`Візуалізація ходу: ${movement.title}`}>
       <div className="movement-diagram__copy">
