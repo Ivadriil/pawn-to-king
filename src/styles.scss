@@ -1,0 +1,63 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap");
+
+:root {
+  font-family: "DM Sans", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  color-scheme: light;
+  --page: #fff;
+  --surface: #f5f8f7;
+  --text: #102b49;
+  --muted: #56738f;
+  --border: #e6edf0;
+  --green: #087b68;
+  --green-dark: #075d54;
+  --green-soft: #e6f2ee;
+  --curriculum-blue-bg: linear-gradient(135deg, #eef6fc, #e9f2f8);
+  --curriculum-blue-border: #e0edf8;
+  --curriculum-green-bg: linear-gradient(135deg, #edf7f2, #e7f2ed);
+  --curriculum-green-border: #e1eee9;
+  --curriculum-sand-bg: linear-gradient(135deg, #fbf6e9, #f6f0e3);
+  --curriculum-sand-border: #f1e9d8;
+  --curriculum-lavender-bg: linear-gradient(135deg, #f3f0fc, #ece9f8);
+  --curriculum-lavender-border: #e8e4f5;
+  --curriculum-piece-light: #775a3f;
+  --curriculum-piece-dark: #252b2b;
+  background: var(--page);
+  color: var(--text);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #101b22;
+  --surface: #182832;
+  --text: #edf5f8;
+  --muted: #afc3ce;
+  --border: #2a3b43;
+  --green: #55b69e;
+  --green-dark: #256e62;
+  --green-soft: #1e3c3a;
+  --curriculum-blue-bg: linear-gradient(135deg, #1b3040, #20394a);
+  --curriculum-blue-border: #2c4a5b;
+  --curriculum-green-bg: linear-gradient(135deg, #1b3833, #21443b);
+  --curriculum-green-border: #2c5147;
+  --curriculum-sand-bg: linear-gradient(135deg, #3a3024, #433725);
+  --curriculum-sand-border: #5a4931;
+  --curriculum-lavender-bg: linear-gradient(135deg, #2d2c46, #373451);
+  --curriculum-lavender-border: #4a4667;
+  --curriculum-piece-light: #e0bb83;
+  --curriculum-piece-dark: #c8d4d6;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+body { min-width: 320px; min-height: 100vh; margin: 0; background: var(--page); }
+button, a { font: inherit; }
+h1, h2, h3, strong { font-family: "Manrope", sans-serif; }
+main { min-height: calc(100vh - 150px); }
+.site-footer { display: flex; align-items: center; justify-content: center; gap: 14px; padding: 24px; border-top: 1px solid var(--border); color: var(--muted); text-align: center; font-size: 13px; a { color: var(--muted); } }
+:focus-visible { outline: 3px solid #59a8e8; outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+}

@@ -1,0 +1,18 @@
+Third-party notices
+====================
+
+@mirasen/react-chessboard 1.2.0
+Copyright (c) 2025 Mirasen contributors
+License: MIT. See mirasen-react-chessboard-MIT.txt.
+Source: https://github.com/mirasen-io/react-chessboard
+
+@mirasen/chessboard 1.5.0
+Copyright (c) 2025 Mirasen contributors
+License: MIT. See mirasen-chessboard-MIT.txt.
+Source: https://github.com/mirasen-io/chessboard
+
+Chessnut chess piece artwork
+Author: Alexis Luengas
+Source: https://github.com/LexLuengas/chessnut-pieces
+License: Apache License 2.0. See chessnut-pieces-Apache-2.0.txt and
+chessnut-pieces-NOTICE.txt. The original piece artwork is unmodified.

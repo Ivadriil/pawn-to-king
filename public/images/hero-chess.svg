@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 430" fill="none">
+  <defs>
+    <linearGradient id="felt" x1="90" y1="75" x2="490" y2="365" gradientUnits="userSpaceOnUse"><stop stop-color="#E8F3EE"/><stop offset="1" stop-color="#F7F8F5"/></linearGradient>
+    <linearGradient id="wood" x1="118" y1="322" x2="464" y2="420" gradientUnits="userSpaceOnUse"><stop stop-color="#734A2F"/><stop offset=".48" stop-color="#B27B4D"/><stop offset="1" stop-color="#5A3928"/></linearGradient>
+    <linearGradient id="ivory" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFF1D8"/><stop offset=".48" stop-color="#D9A66B"/><stop offset="1" stop-color="#A76F3D"/></linearGradient>
+    <linearGradient id="ebony" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#5C524B"/><stop offset=".45" stop-color="#171918"/><stop offset="1" stop-color="#050807"/></linearGradient>
+    <pattern id="checks" width="50" height="50" patternUnits="userSpaceOnUse"><rect width="50" height="50" fill="#D5B38C"/><path d="M0 0h25v25H0zM25 25h25v25H25z" fill="#694B35"/></pattern>
+    <clipPath id="board"><path d="m63 251 332-83 183 75-338 105L63 251Z"/></clipPath>
+    <filter id="shadow" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="8"/></filter>
+  </defs>
+  <path d="M69 225c-12-91 34-166 120-173 88-7 133 53 205 41 72-13 136-22 171 47 36 69 23 148-28 195H96c-14-34-23-72-27-110Z" fill="url(#felt)"/>
+  <ellipse cx="316" cy="360" rx="245" ry="30" fill="#24352B" opacity=".13" filter="url(#shadow)"/>
+  <path d="m63 251 338-92 177 84-338 105L63 251Z" fill="#E6C399"/>
+  <path d="m63 251 177 97v27L63 276v-25Z" fill="#68452F"/>
+  <path d="m240 348 338-105v27L240 375v-27Z" fill="url(#wood)"/>
+  <g clip-path="url(#board)" transform="matrix(1 .55 -1 .3 200 45)"><rect x="30" y="90" width="400" height="400" fill="url(#checks)"/></g>
+  <path d="m63 251 332-83 183 75-338 105L63 251Z" stroke="#754C31" stroke-width="5"/>
+  <g stroke="#67472F" stroke-width="2" opacity=".55"><path d="m92 265 331-83M122 282l331-83M152 298l331-83M181 315l331-83M210 332l331-83"/><path d="m118 237 174 99M176 222l174 99M234 208l174 99M292 193l174 99M350 179l174 99"/></g>
+  <g fill="url(#ivory)" stroke="#A8794A" stroke-width="2" stroke-linejoin="round">
+    <path d="m279 280 10-12-8-13 4-13 13-7-2-35 11-21 13 20-1 36 14 7 5 12-9 14 14 17v11h-75v-11l11-15Z"/>
+    <path d="M287 267c-5 9-8 20-8 34h67c0-15-4-26-11-34h-48Z"/>
+    <path d="M274 301h77l9 8-3 8h-91l-3-8 11-8Z"/>
+    <path d="M130 300c-3-15 2-29 13-39l-3-20 13 11 13-22 14 22 14 1-8 13 7 23c4 10 7 17 7 23h-72l2-12Z"/>
+    <path d="M125 310h86l5 8-4 8h-88l-4-8 5-8Z"/>
+  </g>
+  <g fill="url(#ebony)" stroke="#111615" stroke-width="2" stroke-linejoin="round">
+    <path d="m437 281 9-11-6-13 4-12 12-6-1-35 11-20 12 20-1 36 13 6 5 12-8 13 12 15v10h-71v-10l10-15Z"/>
+    <path d="M445 268c-6 8-9 19-9 32h63c0-13-4-24-11-32h-43Z"/>
+    <path d="M433 297h75l8 8-3 8h-89l-3-8 12-8Z"/>
+    <path d="m526 303 8-10-4-11 10-9 11 9 11 3-4 11 6 8 6 12h-56l12-13Z"/>
+    <path d="M521 316h59l5 7-4 7h-65l-4-7 9-7Z"/>
+  </g>
+  <path d="m295 166-12-17m34-1 2-22m27 39 15-12" stroke="#087B68" stroke-width="3" stroke-linecap="round"/>
+  <path d="m125 185 9 15-3-16m3 16c11 8 23 11 37 8" stroke="#087B68" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="68" y="180" fill="#087B68" font-family="sans-serif" font-size="19" font-style="italic" transform="rotate(-17 68 180)">Вчися граючи</text>
+</svg>

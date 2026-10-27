@@ -1,0 +1,28 @@
+.header {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 24px;
+  max-width: 1440px;
+  min-height: 64px;
+  margin: 0 auto;
+  padding: 0 max(6vw, calc((100vw - 1280px) / 2));
+  border-bottom: 1px solid var(--border);
+  background: var(--page);
+
+  &__logo { display: inline-flex; align-items: center; gap: 12px; width: fit-content; color: var(--text); text-decoration: none; font-family: "Manrope", sans-serif; font-size: 17px; font-weight: 800; white-space: nowrap; }
+  &__logo-icon { color: var(--text); font-size: 32px; line-height: 1; }
+  &__nav { display: flex; align-items: stretch; gap: 26px; height: 64px; }
+  &__link { position: relative; display: inline-flex; align-items: center; gap: 9px; color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 600; transition: color .18s ease; &:hover, &--active { color: var(--green-dark); } &--active::after { position: absolute; right: 0; bottom: 0; left: 0; height: 3px; border-radius: 4px 4px 0 0; background: var(--green); content: ""; } }
+  &__theme-button { display: grid; width: 40px; height: 40px; place-items: center; justify-self: end; border: 1px solid var(--border); border-radius: 50%; background: var(--page); color: var(--text); cursor: pointer; transition: background .18s ease; &:hover { background: var(--surface); } }
+}
+
+@media (max-width: 700px) {
+  .header { grid-template-columns: 1fr auto; gap: 8px 12px; padding: 10px 16px 0; &__logo { font-size: 14px; } &__logo-icon { font-size: 26px; } &__nav { grid-column: 1 / -1; grid-row: 2; justify-content: space-around; height: 46px; gap: 5px; } &__link { gap: 6px; font-size: 12px; } &__theme-button { grid-column: 2; grid-row: 1; width: 36px; height: 36px; } }
+}
+
+@media (max-width: 380px) {
+  .header__link { gap: 4px; font-size: 11px; }
+}
