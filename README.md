@@ -2,6 +2,8 @@
 
 A Ukrainian-language learning website that helps children and beginners learn chess step by step. Lessons combine short explanations, knowledge checks, and interactive chessboard exercises.
 
+**Open the website:** [Chess for Beginners](https://ivadriil.github.io/pawn-to-king/)
+
 ## Features
 
 - Lessons on the chessboard, pieces and their moves, check, checkmate, stalemate, castling, and move notation.
@@ -51,4 +53,4 @@ After running `npm run preview`, open the address shown in the terminal.
 
 ## Project status
 
-Run the project locally with `npm run dev`. Public hosting still needs to be configured separately; GitHub does not automatically run the website from this repository.
+The live website is published with GitHub Pages. Every push to `main` builds and deploys the latest version automatically. To run the project locally, use `npm run dev`.
