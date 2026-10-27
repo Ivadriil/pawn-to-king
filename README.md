@@ -1,54 +1,54 @@
-# Шахи для початківців
+# Chess for Beginners
 
-Навчальний сайт українською мовою, який допомагає дітям і початківцям крок за кроком освоїти шахи. Уроки поєднують коротку теорію, запитання для самоперевірки та інтерактивні вправи на шахівниці.
+A Ukrainian-language learning website that helps children and beginners learn chess step by step. Lessons combine short explanations, knowledge checks, and interactive chessboard exercises.
 
-## Що є на сайті
+## Features
 
-- Теорія про шахівницю, фігури та їхні ходи, шах і мат, пат, рокіровку й запис ходів.
-- Тести та практичні завдання різної складності.
-- Інтерактивна дошка для пересування й розстановки фігур.
-- Навчальні приклади популярних дебютів.
-- Прогрес навчання та зірки за виконані завдання.
-- Світла й темна теми та адаптивний вигляд для телефонів і планшетів.
+- Lessons on the chessboard, pieces and their moves, check, checkmate, stalemate, castling, and move notation.
+- Quizzes and practical exercises at different difficulty levels.
+- An interactive board for moving and placing pieces.
+- Learning examples featuring popular chess openings.
+- Learning progress and stars for completed exercises.
+- Light and dark themes, with responsive layouts for phones and tablets.
 
-## Як запустити сайт на своєму комп’ютері
+## Run the website locally
 
-1. Встановіть [Node.js](https://nodejs.org/) — рекомендовано версію LTS.
-2. Завантажте або клонуйте цей репозиторій і відкрийте його папку в терміналі.
-3. Встановіть залежності:
+1. Install [Node.js](https://nodejs.org/). The LTS version is recommended.
+2. Clone or download this repository, then open its folder in a terminal.
+3. Install the dependencies:
 
    ```bash
    npm install
    ```
 
-4. Запустіть сайт у режимі розробки:
+4. Start the development server:
 
    ```bash
    npm run dev
    ```
 
-5. Відкрийте адресу, яку покаже термінал. Зазвичай це [http://127.0.0.1:5173/](http://127.0.0.1:5173/).
+5. Open the address shown in the terminal. It is usually [http://127.0.0.1:5173/](http://127.0.0.1:5173/).
 
-Щоб зупинити сайт, поверніться до термінала й натисніть `Ctrl+C`.
+To stop the server, return to the terminal and press `Ctrl+C`.
 
-## Перевірка production-збірки
+## Build and preview
 
 ```bash
 npm run build
 npm run preview
 ```
 
-Після `npm run preview` відкрийте адресу, яку покаже термінал.
+After running `npm run preview`, open the address shown in the terminal.
 
-## Технології
+## Tech stack
 
-- React і TypeScript
+- React and TypeScript
 - Vite
 - SCSS
-- `chess.js` для перевірки шахових ходів
-- `@mirasen/react-chessboard` та `@mirasen/chessboard` для шахової дошки
-- `lucide-react` для іконок
+- `chess.js` for chess move validation
+- `@mirasen/react-chessboard` and `@mirasen/chessboard` for the chessboard
+- `lucide-react` for icons
 
-## Поточний стан
+## Project status
 
-Проєкт запускається локально командою `npm run dev`. Публічне розміщення сайту ще потрібно окремо налаштувати; сам GitHub-репозиторій не запускає сайт автоматично.
+Run the project locally with `npm run dev`. Public hosting still needs to be configured separately; GitHub does not automatically run the website from this repository.
