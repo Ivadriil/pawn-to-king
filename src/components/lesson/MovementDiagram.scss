@@ -7,5 +7,8 @@
   &__file{right:3px;bottom:0}&__rank{top:1px;left:3px}
   &__notation{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:2px;padding:14px 16px;border-radius:12px;background:var(--page);color:var(--muted);font-size:13px;line-height:1.5;strong{display:block;margin-bottom:3px;color:var(--text)}code{display:block;margin-bottom:3px;color:var(--green-dark);font-size:16px;font-weight:800}}
 }
+.movement-diagram__board-actions { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-top:12px; }
+.movement-diagram__capture-note,.movement-diagram__caption { display:block; margin:8px 0 0; color:var(--muted); font-size:12px; line-height:1.5; text-align:center; }
+.lesson-visual-board__practice { display:flex; width:fit-content; margin:12px auto 0; }
 @media(max-width:680px){.movement-diagram{grid-template-columns:1fr;gap:15px;padding:17px;&__board{width:min(100%,420px);margin:auto}}}
 @media(max-width:560px){.movement-diagram__notation{grid-template-columns:1fr}}

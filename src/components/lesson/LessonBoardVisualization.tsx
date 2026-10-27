@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { createBoard, type Chessboard as CoreChessboard, type ChessboardExtensionInput } from "@mirasen/chessboard";
+import { toBoardMoveDestinations, toGameMove } from "@mirasen/chessboard/adapters/chessjs";
+import { Chess } from "chess.js";
+import { Dumbbell } from "lucide-react";
 import type { LessonBoard } from "../../features/lessons/lessonTypes";
 import "./LessonBoardVisualization.scss";
 
@@ -32,7 +35,7 @@ const boardExtensions = [
   "check",
 ] as const satisfies readonly ChessboardExtensionInput[];
 
-export function LessonBoardVisualization({ board }: { board: LessonBoard }) {
+export function LessonBoardVisualization({ board, onPractice }: { board: LessonBoard; onPractice: () => void }) {
   const [orientation, setOrientation] = useState<"white" | "black">("white");
   const boardElement = useRef<HTMLDivElement | null>(null);
   const chessboard = useRef<CoreChessboard<typeof boardExtensions> | null>(null);
@@ -41,9 +44,21 @@ export function LessonBoardVisualization({ board }: { board: LessonBoard }) {
     if (!boardElement.current) return;
 
     const instance = createBoard({ element: boardElement.current, extensions: boardExtensions });
+    const game = board.position === "start" ? new Chess() : new Chess(board.position);
     chessboard.current = instance;
-    instance.setPosition(board.position);
+    instance.setPosition(game.fen());
     instance.setOrientation(orientation);
+    instance.setMovability({
+      mode: "strict",
+      destinations: (source) => {
+        const moves = game.moves({ square: source, verbose: true });
+        const destinations = toBoardMoveDestinations(moves);
+        return destinations.length ? destinations : undefined;
+      },
+    });
+    instance.extensions.events.setOnUIMove((move) => {
+      game.move(toGameMove(move));
+    });
 
     return () => {
       instance.destroy();
@@ -92,6 +107,9 @@ export function LessonBoardVisualization({ board }: { board: LessonBoard }) {
           <div ref={boardElement} className="lesson-visual-board__chessboard" />
         </div>
         <span className="lesson-visual-board__caption">Початкова позиція</span>
+        <button className="lesson-button lesson-button--primary lesson-visual-board__practice" type="button" onClick={onPractice}>
+          <Dumbbell size={16} /> Перейти до практики
+        </button>
       </div>
     </section>
   );

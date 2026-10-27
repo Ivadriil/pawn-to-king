@@ -108,8 +108,8 @@ export function LessonPage() {
             </div>
           </header>
 
-          {lesson.board && <LessonBoardVisualization board={lesson.board} />}
-          {lesson.movement && <MovementDiagram movement={lesson.movement} />}
+          {lesson.board && <LessonBoardVisualization board={lesson.board} onPractice={() => { saveLessonProgress({ lessonId: lesson.id, mode: "practice", taskIndex, selectedOption }); setMode("practice"); }} />}
+          {lesson.movement && <MovementDiagram movement={lesson.movement} onPractice={() => { saveLessonProgress({ lessonId: lesson.id, mode: "practice", taskIndex, selectedOption }); setMode("practice"); }} />}
           
 
           <section className="lesson-objectives">

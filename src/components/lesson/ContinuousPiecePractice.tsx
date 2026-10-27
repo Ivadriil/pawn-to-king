@@ -1,13 +1,12 @@
 import { useState, type DragEvent } from "react";
 import { Check } from "lucide-react";
-import { ChessboardGrid } from "./ChessboardGrid";
+import { Chess, type Square } from "chess.js";
+import { ChessboardGrid, type ChessPiece } from "./ChessboardGrid";
 import "./ContinuousPiecePractice.scss";
 
 type PieceCode = `${"w" | "b"}${"K" | "Q" | "R" | "B" | "N" | "P"}`;
 type Mission = { title: string; instrumental: string; start: string; stars: string[] };
 
-const files = "abcdefgh".split("");
-const ranks = [8, 7, 6, 5, 4, 3, 2, 1];
 const missions: Record<string, Mission> = {
   "piece-king": { title: "Король", instrumental: "королем", start: "e4", stars: ["f5", "g6", "h7", "h8", "g8"] },
   "piece-queen": { title: "Ферзь", instrumental: "ферзем", start: "e4", stars: ["e5", "e6", "e7", "e8", "h8"] },
@@ -17,62 +16,88 @@ const missions: Record<string, Mission> = {
   "piece-pawn": { title: "Пішак", instrumental: "пішаком", start: "e2", stars: ["e4", "e5", "e6", "e7", "e8"] },
 };
 
-const xy = (square: string) => [files.indexOf(square[0]), Number(square[1])] as const;
+function makeFen(piece: PieceCode, square: string) {
+  const color = piece[0] as "w" | "b";
+  const type = piece[1];
+  const promoted = type === "P" && (square[1] === "8" || square[1] === "1");
+  const displayedType = promoted ? "Q" : type;
+  const isKing = type === "K";
+  const position: Record<string, string> = color === "w"
+    ? (isKing ? { b6: "k" } : { a1: "K", b6: "k" })
+    : (isKing ? { b6: "K" } : { b6: "K", h8: "k" });
+  position[square] = color === "w" ? displayedType : displayedType.toLowerCase();
+  const ranks = Array.from({ length: 8 }, (_, row) => {
+    let empty = 0;
+    let result = "";
+    for (const file of "abcdefgh") {
+      const item = position[`${file}${8 - row}`];
+      if (item) { if (empty) result += empty; result += item; empty = 0; }
+      else empty += 1;
+    }
+    if (empty) result += empty;
+    return result;
+  });
+  return `${ranks.join("/")} ${color} - - 0 1`;
+}
 
-function canMove(piece: string, from: string, to: string, color: "w" | "b") {
-  const [x1, y1] = xy(from);
-  const [x2, y2] = xy(to);
-  const dx = Math.abs(x2 - x1);
-  const signedDy = y2 - y1;
-  const dy = Math.abs(signedDy);
-  if (from === to || x2 < 0) return false;
-  if (piece === "K") return dx <= 1 && dy <= 1;
-  if (piece === "Q") return dx === 0 || dy === 0 || dx === dy;
-  if (piece === "R") return dx === 0 || dy === 0;
-  if (piece === "B") return dx === dy;
-  if (piece === "N") return (dx === 1 && dy === 2) || (dx === 2 && dy === 1);
-  if (piece === "P") { const direction = color === "w" ? 1 : -1; const startRank = color === "w" ? "2" : "7"; return dx === 0 && (signedDy === direction || (from[1] === startRank && signedDy === direction * 2)); }
-  return false;
+function boardPieces(game: Chess): Partial<Record<string, ChessPiece>> {
+  const pieces: Partial<Record<string, ChessPiece>> = {};
+  game.board().forEach((rank, row) => rank.forEach((item, column) => {
+    if (item) pieces[`${"abcdefgh"[column]}${8 - row}`] = `${item.color}${item.type.toUpperCase()}` as ChessPiece;
+  }));
+  return pieces;
 }
 
 export function ContinuousPiecePractice({ lessonId, piece, onComplete }: { lessonId: string; piece: string; onComplete: (stars: number) => void }) {
   const mission = missions[lessonId];
   const code = piece as PieceCode;
-  const startPosition = mission?.start ?? "e4";
-  const [position, setPosition] = useState(code[0] === "b" && lessonId === "piece-pawn" ? "e7" : startPosition);
+  const startPosition = code[0] === "b" && lessonId === "piece-pawn" ? "e7" : mission?.start ?? "e4";
+  const [position, setPosition] = useState(startPosition);
   const [selected, setSelected] = useState(false);
   const [collected, setCollected] = useState<string[]>([]);
   const [moves, setMoves] = useState(0);
   const [mistakes, setMistakes] = useState(0);
   const [finished, setFinished] = useState(false);
-  const [feedback, setFeedback] = useState("Зірочки вже на дошці. Обери фігуру та рухайся до них по черзі.");
+  const [completionPercent, setCompletionPercent] = useState<number | null>(null);
+  const [feedback, setFeedback] = useState("Зірочки стоять на дошці від початку. Збери всі п’ять дозволеними ходами.");
   if (!mission) return null;
 
   const starSquares = code[0] === "b" && lessonId === "piece-pawn" ? ["e5", "e4", "e3", "e2", "e1"] : mission.stars;
-  const legalSquares = ranks.flatMap((rank) => files.map((file) => `${file}${rank}`)).filter((square) => canMove(code[1], position, square, code[0] as "w"|"b"));
+  const fen = makeFen(code, position);
+  const game = new Chess(fen);
+  const legalSquares = selected
+    ? game.moves({ square: position as Square, verbose: true }).map((move) => move.to)
+    : [];
+  const renderedCode = code[1] === "P" && (position[1] === "8" || position[1] === "1") ? `${code[0]}Q` as PieceCode : code;
 
   const moveTo = (square: string) => {
     if (finished) return;
-    if (!canMove(code[1], position, square, code[0] as "w"|"b")) {
+    const nextGame = new Chess(fen);
+    try {
+      nextGame.move({ from: position as Square, to: square as Square, promotion: square[1] === "8" || square[1] === "1" ? "q" : undefined });
+    } catch {
       setMistakes((count) => count + 1);
-      setFeedback("Так фігура не ходить. Спробуй клітинку з сірим кружечком.");
+      setFeedback("Це неможливий хід за правилами шахів. Обирай поле з підсвіченим кружечком.");
       return;
     }
+    const nextMoves = moves + 1;
     setPosition(square);
-    setMoves((count) => count + 1);
+    setMoves(nextMoves);
     setSelected(false);
     if (starSquares.includes(square) && !collected.includes(square)) {
       const nextCollected = [...collected, square];
       setCollected(nextCollected);
-      setFeedback(`Зірочку зібрано! ${nextCollected.length} із ${starSquares.length}.`);
       if (nextCollected.length === starSquares.length) {
+        const percent = Math.max(50, 100 - Math.max(0, nextMoves - starSquares.length) * 10);
+        const bonus = nextMoves === starSquares.length ? 1 : 0;
         setFinished(true);
-        setFeedback("Усі зірочки зібрано! Чудова робота!");
-        onComplete(starSquares.length);
-      }
+        setCompletionPercent(percent);
+        setFeedback(bonus ? "Усі зірочки зібрано найкоротшим шляхом! Бонусна зірка твоя!" : `Усі зірочки зібрано. Результат — ${percent}%. Спробуй ще раз, щоб знайти коротший шлях.`);
+        onComplete(nextCollected.length + bonus);
+      } else setFeedback(`Зірочку зібрано — ${nextCollected.length} з ${starSquares.length}. Продовжуй маршрут.`);
       return;
     }
-    setFeedback("Фігура перейшла на нову клітинку. Продовжуй шлях до зірочок!");
+    setFeedback("Фігура перейшла на нове поле. Збирай зірочки найкоротшим дозволеним шляхом.");
   };
 
   const dropPiece = (event: DragEvent<HTMLButtonElement>, square: string) => {
@@ -81,15 +106,15 @@ export function ContinuousPiecePractice({ lessonId, piece, onComplete }: { lesso
   };
 
   const earned = collected.length;
-  const pieces = { [position]: code };
+  const pieces = { ...boardPieces(game), [position]: renderedCode };
   const stars = Object.fromEntries(starSquares.filter((square) => !collected.includes(square)).map((square) => [square, "★"]));
 
   return (
     <section className="continuous-practice" aria-labelledby="continuous-practice-title">
       <div className="continuous-practice__intro">
-        <span className="lesson-kicker">Одна партія • {starSquares.length} зірочок</span>
+        <span className="lesson-kicker">Одна позиція • {starSquares.length} зірочок</span>
         <h2 id="continuous-practice-title">Збери всі зірочки {mission.instrumental}</h2>
-        <p>Усі цілі стоять на дошці від початку. Рухайся без скидання позиції, збирай зірочки й не ходи назад пішаком.</p>
+        <p>Усі цілі стоять на дошці від початку. Ходи лише за правилами шахів: за найкоротший маршрут отримаєш 100% і бонусну зірку; довший маршрут теж зарахується, але з нижчим відсотком.</p>
       </div>
 
       <div className="continuous-practice__layout">
@@ -99,7 +124,7 @@ export function ContinuousPiecePractice({ lessonId, piece, onComplete }: { lesso
           legalSquares={selected ? legalSquares : []}
           selectedSquare={selected ? position : null}
           stars={stars}
-          onSquareClick={(square) => square === position ? setSelected(true) : selected && moveTo(square)}
+          onSquareClick={(square) => square === position ? setSelected(true) : selected && legalSquares.includes(square as Square) ? moveTo(square) : undefined}
           onContextMenu={(event) => event.preventDefault()}
           onPieceDragStart={(event) => event.dataTransfer.setData("application/continuous-piece", "piece")}
           onSquareDragOver={(event) => event.preventDefault()}
@@ -107,11 +132,11 @@ export function ContinuousPiecePractice({ lessonId, piece, onComplete }: { lesso
         />
 
         <aside className="continuous-practice__score">
-          <div className="continuous-practice__piece"><img src={`${import.meta.env.BASE_URL}chess-pieces/${code}.svg`} alt="" /><strong>{mission.title}</strong></div>
+          <div className="continuous-practice__piece"><img src={`${import.meta.env.BASE_URL}chess-pieces/${renderedCode}.svg`} alt="" /><strong>{mission.title}</strong></div>
           <p className="continuous-practice__feedback" role="status" aria-live="polite">{feedback}</p>
           <div className="continuous-practice__stats"><span>Ходів: <strong>{moves}</strong></span><span>Помилок: <strong>{mistakes}</strong></span></div>
-          <div className="continuous-practice__stars" aria-label={`${earned} зірок із ${starSquares.length}`}>{"★".repeat(earned)}{"☆".repeat(starSquares.length - earned)}</div>
-          {finished && <div className="continuous-practice__complete"><Check size={18} /><span>Усі зірочки зібрано за {moves} ходів!</span></div>}
+          <div className="continuous-practice__stars" aria-label={`${earned} зірок із ${starSquares.length + 1}`}>{"★".repeat(earned)}{"☆".repeat(starSquares.length - earned)}{completionPercent === 100 ? "★" : "☆"}</div>
+          {finished && <div className="continuous-practice__complete" role="status"><Check size={18} /><span>Усі зірочки зібрано за {moves} ходів. Результат — {completionPercent}%. {completionPercent === 100 ? "Бонусна зірка за найкоротший шлях!" : `Для 100% потрібно вкластися у ${starSquares.length} ходів.`}</span></div>}
         </aside>
       </div>
     </section>
