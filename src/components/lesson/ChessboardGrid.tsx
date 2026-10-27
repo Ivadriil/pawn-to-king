@@ -81,7 +81,7 @@ export function ChessboardGrid({ pieces, orientation = "white", legalSquares = [
             onDrop={onSquareDrop ? (event) => onSquareDrop(event, square) : undefined}
             type="button"
           >
-            {piece && <img className={movingPieces[square] ? "chessboard-grid__piece--moving" : undefined} style={movingPieces[square] ? ({ "--piece-from-x": `${movingPieces[square].x}%`, "--piece-from-y": `${movingPieces[square].y}%` } as CSSProperties) : undefined} src={`/chess-pieces/${piece}.svg`} alt="" draggable={false} />}
+            {piece && <img className={movingPieces[square] ? "chessboard-grid__piece--moving" : undefined} style={movingPieces[square] ? ({ "--piece-from-x": `${movingPieces[square].x}%`, "--piece-from-y": `${movingPieces[square].y}%` } as CSSProperties) : undefined} src={`${import.meta.env.BASE_URL}chess-pieces/${piece}.svg`} alt="" draggable={false} />}
             {stars[square] && <span className="chessboard-grid__star" aria-hidden="true">{stars[square]}</span>}
             {file === (orientation === "white" ? "a" : "h") && <span className="chessboard-grid__rank">{rank}</span>}
             {rank === (orientation === "white" ? 1 : 8) && <span className="chessboard-grid__file">{file}</span>}

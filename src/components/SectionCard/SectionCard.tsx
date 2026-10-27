@@ -7,7 +7,7 @@ export function SectionCard({ section }: { section: LessonSection }) {
     <article className={`section-card section-card--${section.tone}`} id={section.id}>
       <div className="section-card__heading">
         <span className="section-card__number">{section.number}</span>
-        <img className="section-card__piece" src={`/chess-pieces/${section.piece}.svg`} alt="" loading="lazy" />
+        <img className="section-card__piece" src={`${import.meta.env.BASE_URL}chess-pieces/${section.piece}.svg`} alt="" loading="lazy" />
       </div>
       <h3>{section.title}</h3>
       <ul>{section.lessons.map(({ id, title }) => <li key={id}><Link to={`/lesson/${id}`}>{title}</Link></li>)}</ul>

@@ -16,7 +16,7 @@ function App() {
       </main>
       <footer className="site-footer">
         <span>Вчися грати — один хід за раз ♟</span>
-        <a href="/licenses/THIRD_PARTY_NOTICES.txt">Ліцензії компонентів</a>
+        <a href={`${import.meta.env.BASE_URL}licenses/THIRD_PARTY_NOTICES.txt`}>Ліцензії компонентів</a>
       </footer>
     </>
   );

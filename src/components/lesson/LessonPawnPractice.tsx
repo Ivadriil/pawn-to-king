@@ -79,7 +79,7 @@ export function LessonPawnPractice({ onComplete }: { onComplete: (stars: number)
               const color = placement[square];
               const isDark = (fileIndex + rank) % 2 === 1;
               return <button aria-label={`${square}${color ? `, ${color === "white" ? "білий" : "чорний"} пішак` : ""}`} className={`pawn-practice__square${isDark ? " pawn-practice__square--dark" : ""}${color ? " pawn-practice__square--occupied" : ""}`} key={square} onClick={() => selectedColor && placePawn(square, selectedColor)} onContextMenu={(event) => { event.preventDefault(); handleSquareRightClick(event, square); }} onDragOver={(event) => event.preventDefault()} onDrop={(event) => handleDrop(event, square)} onDragStart={(event) => { if (!color) return; event.dataTransfer.setData("application/chess-pawn-color", color); event.dataTransfer.setData("application/chess-pawn-square", square); }} draggable={Boolean(color)} type="button">
-                {color && <img src={`/chess-pieces/${color === "white" ? "wP" : "bP"}.svg`} alt={`${color === "white" ? "Білий" : "Чорний"} пішак`} draggable={false} />}
+                {color && <img src={`${import.meta.env.BASE_URL}chess-pieces/${color === "white" ? "wP" : "bP"}.svg`} alt={`${color === "white" ? "Білий" : "Чорний"} пішак`} draggable={false} />}
                 {file === "a" && <span className="pawn-practice__rank">{rank}</span>}
                 {rank === 1 && <span className="pawn-practice__file">{file}</span>}
               </button>;
@@ -100,7 +100,7 @@ export function LessonPawnPractice({ onComplete }: { onComplete: (stars: number)
             onDragStart={(event) => event.dataTransfer.setData("application/chess-pawn-color", "white")}
             type="button"
           >
-            <img src="/chess-pieces/wP.svg" alt="" />
+            <img src={`${import.meta.env.BASE_URL}chess-pieces/wP.svg`} alt="" />
           </button>
           <button
             aria-label="Обрати чорного пішака для розстановки"
@@ -112,7 +112,7 @@ export function LessonPawnPractice({ onComplete }: { onComplete: (stars: number)
             onDragStart={(event) => event.dataTransfer.setData("application/chess-pawn-color", "black")}
             type="button"
           >
-            <img src="/chess-pieces/bP.svg" alt="" />
+            <img src={`${import.meta.env.BASE_URL}chess-pieces/bP.svg`} alt="" />
           </button>
           <button className="lesson-button lesson-button--primary pawn-practice__check" onClick={checkPosition} type="button">
             Перевірити розстановку

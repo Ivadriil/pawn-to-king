@@ -4,18 +4,18 @@ import type { LessonBoard } from "../../features/lessons/lessonTypes";
 import "./LessonBoardVisualization.scss";
 
 const pieceUrls = {
-  wK: "/chess-pieces/wK.svg",
-  wQ: "/chess-pieces/wQ.svg",
-  wR: "/chess-pieces/wR.svg",
-  wB: "/chess-pieces/wB.svg",
-  wN: "/chess-pieces/wN.svg",
-  wP: "/chess-pieces/wP.svg",
-  bK: "/chess-pieces/bK.svg",
-  bQ: "/chess-pieces/bQ.svg",
-  bR: "/chess-pieces/bR.svg",
-  bB: "/chess-pieces/bB.svg",
-  bN: "/chess-pieces/bN.svg",
-  bP: "/chess-pieces/bP.svg",
+  wK: `${import.meta.env.BASE_URL}chess-pieces/wK.svg`,
+  wQ: `${import.meta.env.BASE_URL}chess-pieces/wQ.svg`,
+  wR: `${import.meta.env.BASE_URL}chess-pieces/wR.svg`,
+  wB: `${import.meta.env.BASE_URL}chess-pieces/wB.svg`,
+  wN: `${import.meta.env.BASE_URL}chess-pieces/wN.svg`,
+  wP: `${import.meta.env.BASE_URL}chess-pieces/wP.svg`,
+  bK: `${import.meta.env.BASE_URL}chess-pieces/bK.svg`,
+  bQ: `${import.meta.env.BASE_URL}chess-pieces/bQ.svg`,
+  bR: `${import.meta.env.BASE_URL}chess-pieces/bR.svg`,
+  bB: `${import.meta.env.BASE_URL}chess-pieces/bB.svg`,
+  bN: `${import.meta.env.BASE_URL}chess-pieces/bN.svg`,
+  bP: `${import.meta.env.BASE_URL}chess-pieces/bP.svg`,
 } satisfies Record<string, string>;
 
 const boardExtensions = [

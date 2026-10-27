@@ -107,7 +107,7 @@ export function ContinuousPiecePractice({ lessonId, piece, onComplete }: { lesso
         />
 
         <aside className="continuous-practice__score">
-          <div className="continuous-practice__piece"><img src={`/chess-pieces/${code}.svg`} alt="" /><strong>{mission.title}</strong></div>
+          <div className="continuous-practice__piece"><img src={`${import.meta.env.BASE_URL}chess-pieces/${code}.svg`} alt="" /><strong>{mission.title}</strong></div>
           <p className="continuous-practice__feedback" role="status" aria-live="polite">{feedback}</p>
           <div className="continuous-practice__stats"><span>Ходів: <strong>{moves}</strong></span><span>Помилок: <strong>{mistakes}</strong></span></div>
           <div className="continuous-practice__stars" aria-label={`${earned} зірок із ${starSquares.length}`}>{"★".repeat(earned)}{"☆".repeat(starSquares.length - earned)}</div>

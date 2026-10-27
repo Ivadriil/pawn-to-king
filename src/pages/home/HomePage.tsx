@@ -63,7 +63,7 @@ export function HomePage() {
           </div>
         </div>
 
-        <img className="hero__image" src="/images/hero-chess.svg" alt="Шаховий кінь на дошці" />
+        <img className="hero__image" src={`${import.meta.env.BASE_URL}images/hero-chess.svg`} alt="Шаховий кінь на дошці" />
       </section>
 
       <div className="page-content">

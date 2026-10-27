@@ -18,7 +18,7 @@ function MiniBoard({ fen, title }: { fen: string; title: string }) {
         const piece = row[colIndex];
         const squareColor = (rowIndex + colIndex) % 2 === 1 ? "dark" : "light";
         return <span className={`opening-board__square opening-board__square--${squareColor}`} key={`${file}${rank}`}>
-          {piece && <img src={`/chess-pieces/${piece === piece.toUpperCase() ? `w${piece}` : `b${piece.toUpperCase()}`}.svg`} alt="" loading="lazy" />}
+          {piece && <img src={`${import.meta.env.BASE_URL}chess-pieces/${piece === piece.toUpperCase() ? `w${piece}` : `b${piece.toUpperCase()}`}.svg`} alt="" loading="lazy" />}
         </span>;
       });
     })}
